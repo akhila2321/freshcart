@@ -1,0 +1,43 @@
+export const wishlistData = [
+  {
+    id: "27d290a4-ff79-4a86-bf6f-1d32313e513b",
+    product_title: "Fresh Banana",
+    product_category: "Fruits & Vegetables",
+    price: 5,
+    salePrice: 3,
+    unit: "2Pc",
+    featuredImage: "/images/products/product-img-18.jpg",
+    stocks: 10,
+  },
+  {
+    id: "dc31039b-d743-479d-b375-b771e00f445f",
+    product_title: "Beatroot",
+    product_category: "Fruits & Vegetables",
+    price: 18,
+    salePrice: 12.6,
+    unit: "1kg",
+    featuredImage: "/images/products/product-img-19.jpg",
+    stocks: 10,
+  },
+  {
+    id: "d92305d4-def5-4f7c-bad4-4a7c869cdcce",
+    product_title: "Golden Pineapple",
+    product_category: "Fruits & Vegetables",
+    price: 18,
+    salePrice: 14.4,
+    unit: "2No",
+    featuredImage: "/images/products/product-img-13.jpg",
+    stocks: 0,
+  },
+
+  {
+    id: "199571c8-256a-4126-a270-f48b0ec6f89a",
+    product_title: "Fresh Kiwi",
+    product_category: "Fruits & Vegetables",
+    price: 35,
+    salePrice: 29.75,
+    unit: "1kg",
+    featuredImage: "/images/products/product-img-17.jpg",
+    stocks: 10,
+  },
+];
