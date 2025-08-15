@@ -8,10 +8,12 @@ import {
   Col,
   Image,
   InputGroup,
+  Form,
   Button,
   Nav,
   Navbar,
   NavDropdown,
+  Dropdown,
 } from "react-bootstrap";
 import { Archive, Bell, Cart2, PersonCircle, List } from "react-bootstrap-icons";
 
@@ -40,54 +42,101 @@ CustomToggle.displayName = "Custom Toggle";
 
 const Header = ({ signUpToggle, cartToggle, menuToggle, activeView, onNavigate }) => {
   const logo = useSelector((state) => state.app.logo);
+  const cart = useSelector((state) => state.cart);
   
+  // Calculate total items in cart
+  const cartItemCount = cart.items?.reduce((total, item) => total + item.quantity, 0) || 0;
+
   const handleNavClick = (view) => {
     onNavigate?.(view);
   };
+
   return (
-    <header>
-      <Container>
+    <header className="border-bottom">
+      <Container fluid="lg">
         <Topbar />
-        <Row className="align-items-center py-3">
-          <Col xl={2} md={3} xs={3} className="d-flex align-items-center">
+        <Row className="align-items-center py-2 py-lg-3">
+          {/* Logo and Mobile Menu Button */}
+          <Col xl={2} lg={3} md={3} xs={3} className="d-flex align-items-center">
             <Button 
               variant="outline-secondary" 
-              className="d-lg-none me-2"
+              className="d-lg-none me-2 border-0"
               onClick={menuToggle}
+              aria-label="Toggle navigation"
             >
-              <List />
+              <List size={20} />
             </Button>
-            <Link href="/">
-              <Image src={logo} alt="" style={{ height: '40px' }} />
+            <Link href="/" className="d-flex align-items-center" style={{ height: '40px' }}>
+              <Image src={logo} alt="FreshCart" className="h-100" style={{ maxWidth: '100%', objectFit: 'contain' }} />
             </Link>
           </Col>
           
-          <Col xl={6} md={5} xs={12} className="d-none d-lg-block">
-            <Nav className="me-auto">
-              <Nav.Link 
-                className={`me-3 ${activeView === 'home' ? 'text-primary fw-bold' : ''}`}
-                onClick={() => handleNavClick('home')}
-              >
-                Home
-              </Nav.Link>
-              <span 
-                className="nav-link me-3"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                All
-              </span>
+          {/* Desktop Navigation */}
+          <Col xl={6} lg={5} className="d-none d-lg-block">
+            <Nav className="align-items-center h-100">
+              <Nav.Item>
+                <Link 
+                  href="/" 
+                  className={`nav-link px-3 py-2 ${activeView === 'home' ? 'text-primary fw-bold' : 'text-dark'}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick('home');
+                  }}
+                >
+                  Home
+                </Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link 
+                  href="/departments" 
+                  className={`nav-link px-3 py-2 ${activeView === 'departments' ? 'text-primary fw-bold' : 'text-dark'}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick('departments');
+                  }}
+                >
+                  Departments
+                </Link>
+              </Nav.Item>
             </Nav>
           </Col>
           
-          <Col xl={4} md={4} xs={9} className="d-flex justify-content-end">
+          {/* Right Side Icons */}
+          <Col xl={4} lg={4} md={9} xs={9} className="d-flex justify-content-end">
             <div className="d-flex align-items-center">
-              <Button variant="outline-secondary" className="me-2" onClick={signUpToggle}>
+              <Button 
+                variant="outline-secondary" 
+                className="me-2 d-none d-md-flex align-items-center" 
+                onClick={signUpToggle}
+                aria-label="Account"
+              >
                 <PersonCircle className="me-1" />
-                Login / Sign Up
+                <span className="d-none d-xl-inline">Login / Sign Up</span>
+              </Button>
+              
+              {/* Mobile Account Button */}
+              <Button 
+                variant="outline-secondary" 
+                className="me-2 d-md-none" 
+                onClick={signUpToggle}
+                aria-label="Account"
+              >
+                <PersonCircle />
+              </Button>
+              
+              {/* Cart Button */}
+              <Button 
+                variant="outline-secondary" 
+                className="position-relative me-2" 
+                onClick={cartToggle}
+                aria-label="Cart"
+              >
+                <Cart2 />
+                {cartItemCount > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.6rem' }}>
+                    {Math.min(cartItemCount, 99)}{cartItemCount > 99 ? '+' : ''}
+                  </span>
+                )}
               </Button>
               <Button variant="outline-secondary" onClick={cartToggle}>
                 <Cart2 className="me-1" />

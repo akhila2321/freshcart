@@ -290,7 +290,7 @@ const Header = ({ menuToggle }) => {
                       // Not logged in state
                       <>
                         <div className="account-welcome">
-                          <h6>Welcome to FreshCart</h6>
+                          <h6>Welcome to ATX Meats</h6>
                           <p>Sign in to access your account</p>
                         </div>
                         <Dropdown.Item as={Link} href="/signin" className="text-primary">

@@ -1,18 +1,40 @@
-import { useRouter } from 'next/router';
+'use client';
+
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import Spinner from 'react-bootstrap/Spinner';
 
-export default function ProtectedRoute({ children, requiredRole }) {
+export default function ProtectedRoute({ 
+  children, 
+  requiredRole,
+  loadingComponent = (
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '60vh' }}>
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </div>
+  )
+}) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { isAuthenticated, loading, user } = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    if (!loading) {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient || loading) return;
+    
+    const checkAuth = () => {
       if (!isAuthenticated) {
         // Redirect to login if not authenticated
-        router.push(`/signin?redirect=${encodeURIComponent(router.asPath)}`);
+        const redirectUrl = `/signin?redirect=${encodeURIComponent(pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : ''))}`;
+        router.push(redirectUrl);
       } else if (requiredRole && user?.role !== requiredRole) {
         // Redirect to unauthorized page if role doesn't match
         router.push('/unauthorized');
@@ -20,26 +42,23 @@ export default function ProtectedRoute({ children, requiredRole }) {
         // User is authenticated and authorized
         setIsAuthorized(true);
       }
-    }
-  }, [isAuthenticated, loading, requiredRole, router, user?.role]);
+    };
+    
+    checkAuth();
+  }, [isAuthenticated, loading, requiredRole, router, user?.role, isClient, pathname, searchParams]);
 
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '60vh' }}>
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
-    );
+  if (loading || !isClient) {
+    return loadingComponent;
   }
 
   return isAuthorized ? children : null;
 }
 
-export function withAuth(Component, requiredRole) {
+// Higher Order Component for protecting pages
+export function withAuth(Component, options = {}) {
   return function WithAuth(props) {
     return (
-      <ProtectedRoute requiredRole={requiredRole}>
+      <ProtectedRoute requiredRole={options.requiredRole} loadingComponent={options.loadingComponent}>
         <Component {...props} />
       </ProtectedRoute>
     );

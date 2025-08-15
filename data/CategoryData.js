@@ -1,79 +1,78 @@
 import { v4 as uuid } from "uuid";
 
-export const categoryData = [
+// Base categories with unique titles and appropriate images
+const baseCategories = [
   {
-    id: uuid(),
     title: "Dairy, Bread & Eggs",
     image: "/images/category/category-dairy-bread-eggs.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
-    title: "Snack & Munchies",
+    title: "Snacks & Munchies",
     image: "/images/category/category-snack-munchies.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
-    title: "Backery & Biscuites",
+    title: "Bakery & Biscuits",
     image: "/images/category/category-bakery-biscuits.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Instant Food",
     image: "/images/category/category-instant-food.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Tea, Coffee & Drinks",
     image: "/images/category/category-tea-coffee-drinks.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Atta, Rice & Dal",
     image: "/images/category/category-atta-rice-dal.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Baby Care",
     image: "/images/category/category-baby-care.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Chicken, Meat & Fish",
     image: "/images/category/category-chicken-meat-fish.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Cleaning Essentials",
     image: "/images/category/category-cleaning-essentials.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Pet Care",
     image: "/images/category/category-pet-care.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
     title: "Fruits & Vegetables",
     image: "/images/category/category-fruits-vegetables.jpg",
     link: "shop/shop-grid",
   },
   {
-    id: uuid(),
-    title: "Fruits & Vegetables",
+    title: "Cold Drinks & Juices",
     image: "/images/category/category-cold-drinks-juices.jpg",
     link: "shop/shop-grid",
   },
 ];
+
+// Generate unique IDs and ensure no duplicates
+export const categoryData = Array.from(
+  new Map(
+    baseCategories.map(category => [
+      category.title.toLowerCase(), 
+      { ...category, id: uuid() }
+    ])
+  ).values()
+);
 
 export const categoryCircleData = [
   {

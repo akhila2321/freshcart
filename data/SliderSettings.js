@@ -142,27 +142,49 @@ export const ourTeamSliderSettings = {
 
 export const categorySliderOneSettings = {
   dots: false,
-  infinite: true,
-  autoplay: true,
-  speed: 1000,
-  slidesToShow: 6,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 8,
   slidesToScroll: 2,
+  autoplay: false,
   arrows: true,
-  nextArrow: <NextSlideArrow />,
-  prevArrow: <PrevSlideArrow />,
-  initialSlide: 0,
+  nextArrow: <NextSlideArrow size={20} className="position-absolute end-0" />,
+  prevArrow: <PrevSlideArrow size={20} className="position-absolute start-0" />,
   responsive: [
     {
-      breakpoint: 1400,
-      settings: { slidesToShow: 4, slidesToScroll: 4 },
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 6,
+        slidesToScroll: 2,
+      },
     },
     {
-      breakpoint: 820,
-      settings: { slidesToShow: 2, slidesToScroll: 1 },
+      breakpoint: 992,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 2,
+      },
     },
     {
-      breakpoint: 480,
-      settings: { slidesToShow: 2, slidesToScroll: 1 },
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 400,
+      settings: {
+        slidesToShow: 2.5,
+        slidesToScroll: 1,
+      },
     },
   ],
 };

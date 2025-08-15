@@ -62,8 +62,19 @@ const CategoriesCollapse = ({ ...props }) => {
                 >
                   <Nav as="ul" className="flex-column ms-3">
                     {item.children.map((subItem) => (
-                      <Nav.Item key={subItem.id} as="li">
-                        <Nav.Link href="">{subItem.title}</Nav.Link>
+                      <Nav.Item key={subItem.id} as="li" className="mb-2">
+                        <Nav.Link href={subItem.link || "#"} className="d-flex align-items-center">
+                          {subItem.image && (
+                            <div className="me-2" style={{ width: '30px', height: '30px', borderRadius: '4px', overflow: 'hidden' }}>
+                              <img 
+                                src={subItem.image} 
+                                alt={subItem.title} 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            </div>
+                          )}
+                          <span>{subItem.title}</span>
+                        </Nav.Link>
                       </Nav.Item>
                     ))}
                   </Nav>

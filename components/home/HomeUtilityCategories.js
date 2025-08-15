@@ -29,12 +29,6 @@ export const homeUtilityCategories = [
     link: '/category/party-needs'
   },
   {
-    id: 'cleaning-aids',
-    title: 'Cleaning Aids & Tissues',
-    icon: '/images/icons/cleaning.svg',
-    link: '/category/cleaning-aids'
-  },
-  {
     id: 'automotive-needs',
     title: 'Automotive Needs',
     icon: '/images/icons/automotive.svg',

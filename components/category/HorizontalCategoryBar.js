@@ -110,15 +110,21 @@ const HorizontalCategoryBar = () => {
           >
 
             {/* Category Items */}
-            {allCategories.map((category) => (
+            {allCategories.filter(category => ![
+              'home-utility',
+              'bath-laundry',
+              'pooja-festive',
+              'party-needs',
+              'cleaning-aids-tissues',
+              'automotive-needs'
+            ].includes(category.id)).map((category) => (
               <Link
                 key={category.id}
                 href={`/category/${category.id}`}
                 className={`text-decoration-none text-center ${activeCategory === category.id ? 'text-primary' : 'text-dark'}`}
                 onClick={(e) => {
-                  e.preventDefault();
+                  // Let the Link component handle the navigation
                   setActiveCategory(category.id);
-                  // TODO: Implement filter logic to show products in this category
                 }}
                 style={{
                   minWidth: '120px',

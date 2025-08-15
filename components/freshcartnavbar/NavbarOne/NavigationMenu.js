@@ -5,9 +5,9 @@ import { Navbar, Container, Offcanvas, Image, Button } from "react-bootstrap";
 
 // import sub components
 import CategoryCollapse from "../sub-components/CategoryCollapse";
-import CategoryDropdown from "../sub-components/CategoryDropdown";
 import MainMenu from "../sub-components/MainMenu";
 import SearchInputForm from "../sub-components/SearchInputForm";
+import { TextLeft } from "react-bootstrap-icons";
 
 // import required routes files
 import { AllDepartment } from "routes/MainNavigation";
@@ -35,7 +35,10 @@ const NavigationMenu = ({ show, handleClose }) => {
               <SearchInputForm />
             </div>
             <CategoryCollapse />
-            <CategoryDropdown items={AllDepartment} title="All Departments" />
+            <Button variant="primary" className="me-3 d-none d-lg-flex align-items-center">
+              <TextLeft size={16} className="me-2" />
+              All Departments
+            </Button>
             <MainMenu />
           </Offcanvas.Body>
         </Offcanvas>

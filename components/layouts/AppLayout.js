@@ -1,32 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { NavigationProvider } from 'context/NavigationContext';
-import NavbarFive from '../freshcartnavbar/NavbarFive/NavbarFive';
+import GlobalHeader from '../common/GlobalHeader';
 import Footer from '../footer/FooterLight';
-import HomeContent from '../home/HomeContent';
-import DepartmentsContent from '../departments/DepartmentsContent';
+import dynamic from 'next/dynamic';
 
-const AppLayout = () => {
-  const [activeView, setActiveView] = useState('home');
+// Dynamically import page components with no SSR
+const HomePage = dynamic(() => import('components/home/HomeContent'), { ssr: false });
+const StoresPage = dynamic(() => import('components/stores/StoresContent'), { ssr: false });
+const MegaMenuPage = dynamic(() => import('components/megamenu/MegaMenuContent'), { ssr: false });
 
+const AppLayout = ({ children }) => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [activeView, setActiveView] = useState(pathname || '/');
+
+  // Update active view when pathname changes
+  useEffect(() => {
+    setActiveView(pathname);
+    // Scroll to top on route change
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  // Render the appropriate content based on the active view
   const renderContent = () => {
     switch (activeView) {
-      case 'departments':
-        return <DepartmentsContent />;
-      case 'home':
+      case '/':
+        return <HomePage />;
+      case '/stores':
+        return <StoresPage />;
+      case '/mega-menu':
+        return <MegaMenuPage />;
       default:
-        return <HomeContent />;
+        return children;
     }
   };
 
   return (
     <NavigationProvider>
       <div className="d-flex flex-column min-vh-100">
-        <header className="fixed-top bg-white shadow-sm" style={{ zIndex: 1040 }}>
-          <NavbarFive activeView={activeView} onViewChange={setActiveView} />
-        </header>
-        <main style={{ paddingTop: '120px', flex: 1 }}>
+        <GlobalHeader />
+        <main className="flex-grow-1">
           {renderContent()}
         </main>
         <Footer />

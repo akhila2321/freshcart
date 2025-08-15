@@ -6,7 +6,6 @@ import PopularProducts from "./components/PopularProducts";
 import HorizontalBanner from "./components/HorizontalBanner";
 import DailyBestSale from "./components/DailyBestSale";
 import WhyChooseUs from "./components/WhyChooseUs";
-import HomeUtilityCategories from "./components/HomeUtilityCategories";
 import HorizontalCategoryBar from "../../../components/category/HorizontalCategoryBar";
 
 // import template components
@@ -21,7 +20,6 @@ const Index = () => {
       <HorizontalCategoryBar />
       <HomeSlider />
       <CategorySlider />
-      <HomeUtilityCategories />
       <HorizontalBanner />
       <PopularProducts />
       <DailyBestSale />
